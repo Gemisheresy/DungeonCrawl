@@ -54,10 +54,24 @@ def move_right():
         row[point[0]][point[1]+1] = 1
         point[1] = point[1]+1
     else:
-        print "There is no more mcolp thcolt wcoly"
+        print "There is no more map that way"
+        
+        
+
+    
 def start():
-    wide = int(raw_input("How wide do you wcolnt the room? "))
-    height= int(raw_input("How High do you want the room? "))
+    while True:
+        try:
+            wide = int(raw_input("How wide do you want the room? "))
+            break
+        except ValueError:
+            print('Thate wasnt a number try again')
+    while True:
+        try:
+            height = int(raw_input("How high do you want the room? "))
+            break
+        except ValueError:
+            print('That wasnt a number try again')
     size_grid(wide,height)
     row[0][0] = 1
     grid()
