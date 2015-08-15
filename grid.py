@@ -14,7 +14,7 @@ def draw_grid():
     # Draws grid and clears command line
     cls()
     for i in range(len(row)):
-        print ''.join(row[i])
+        print(''.join(row[i]))
 def cls():
     # Clears command line
     os.system(['clear','cls'][os.name == 'nt'])
@@ -30,7 +30,7 @@ def move(key):
             row[point[0]+1][point[1]] = '1 '
             point[0] = point[0]+1
         else:
-            print "There is no more map that way"
+            print("There is no more map that way")
     elif key == 'w':
          # Moves one space up
         if point[0] > 0:
@@ -38,7 +38,7 @@ def move(key):
             row[point[0]-1][point[1]] = '1 '
             point[0] = point[0]-1
         else:
-            print "There is no more map that way"
+            print("There is no more map that way")
     elif key == 'a':
          # Moves one space left
         if point[1] > 0 :
@@ -46,7 +46,7 @@ def move(key):
             row[point[0]][point[1]-1] = '1 '
             point[1] = point[1]+-1
         else:
-            print "There is no more map that way"
+            print("There is no more map that way")
     elif key == 'd':
           # Moves one space right
         if point[1] < len(col)- 1:
@@ -54,9 +54,9 @@ def move(key):
             row[point[0]][point[1]+1] = '1 '
             point[1] = point[1]+1
         else:
-            print "There is no more map that way"
+            print("There is no more map that way")
     elif key == 'e':
-            done == True
+            done = True
 
     
 def start():
