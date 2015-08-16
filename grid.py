@@ -60,6 +60,7 @@ def move(key):
 
     
 def start():
+    done = False
     while True:
         try:
             wide = int(raw_input("How wide do you want the room? "))
@@ -76,6 +77,11 @@ def start():
     row[0][0] = '1 '
     draw_grid()
     while done == False:
-        move(str(raw_input('Where do you want to go? ')))
+        way = str(raw_input('Where do you want to go? '))
+        if way == 'e':
+            done = True
+            cls()
+        else:
+            move(way)
         draw_grid()
 start()
