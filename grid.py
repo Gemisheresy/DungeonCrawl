@@ -2,7 +2,7 @@ import os
 col = []
 row = []
 done = False
-point = [0,0]
+hero = [0,0]
 def size_grid(x,y):
     #Makes grid at size
     for i in range(x):
@@ -20,39 +20,39 @@ def cls():
     os.system(['clear','cls'][os.name == 'nt'])
 def get_current():
     # Returns command line
-    return point
+    return hero
 
 def move(key):
     if key == 's':
          # Moves one down
-        if point[0] < len(row)- 1:
-            row[point[0]][point[1]] = '0 '
-            row[point[0]+1][point[1]] = '1 '
-            point[0] = point[0]+1
+        if hero[0] < len(row)- 1:
+            row[hero[0]][hero[1]] = '0 '
+            row[hero[0]+1][hero[1]] = '1 '
+            hero[0] = hero[0]+1
         else:
             print("There is no more map that way")
     elif key == 'w':
          # Moves one space up
-        if point[0] > 0:
-            row[point[0]][point[1]] = '0 '
-            row[point[0]-1][point[1]] = '1 '
-            point[0] = point[0]-1
+        if hero[0] > 0:
+            row[hero[0]][hero[1]] = '0 '
+            row[hero[0]-1][hero[1]] = '1 '
+            hero[0] = hero[0]-1
         else:
             print("There is no more map that way")
     elif key == 'a':
          # Moves one space left
-        if point[1] > 0 :
-            row[point[0]][point[1]] = '0 '
-            row[point[0]][point[1]-1] = '1 '
-            point[1] = point[1]+-1
+        if hero[1] > 0 :
+            row[hero[0]][hero[1]] = '0 '
+            row[hero[0]][hero[1]-1] = '1 '
+            hero[1] = hero[1]+-1
         else:
             print("There is no more map that way")
     elif key == 'd':
           # Moves one space right
-        if point[1] < len(col)- 1:
-            row[point[0]][point[1]] = '0 '
-            row[point[0]][point[1]+1] = '1 '
-            point[1] = point[1]+1
+        if hero[1] < len(col)- 1:
+            row[hero[0]][hero[1]] = '0 '
+            row[hero[0]][hero[1]+1] = '1 '
+            hero[1] = hero[1]+1
         else:
             print("There is no more map that way")
     elif key == 'e':
