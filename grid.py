@@ -63,13 +63,13 @@ def start():
     done = False
     while True:
         try:
-            wide = int(raw_input("How wide do you want the room? "))
+            wide = int(input("How wide do you want the room? "))
             break
         except ValueError:
             print('Thate wasnt a number try again')
     while True:
         try:
-            height = int(raw_input("How high do you want the room? "))
+            height = int(input("How high do you want the room? "))
             break
         except ValueError:
             print('That wasnt a number try again')
@@ -77,7 +77,7 @@ def start():
     row[0][0] = '1 '
     draw_grid()
     while done == False:
-        way = str(raw_input('Where do you want to go? '))
+        way = str(input('Where do you want to go? '))
         if way == 'e':
             done = True
             cls()
