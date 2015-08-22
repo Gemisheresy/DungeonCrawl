@@ -2,7 +2,7 @@ import os
 col = []
 row = []
 done = False
-hero = [0,0]
+hero = {'point':[0,0]}
 def size_grid(x,y):
     #Makes grid at size
     for i in range(x):
@@ -25,34 +25,34 @@ def get_current():
 def move(key):
     if key == 's':
          # Moves one down
-        if hero[0] < len(row)- 1:
-            row[hero[0]][hero[1]] = '0 '
-            row[hero[0]+1][hero[1]] = '1 '
-            hero[0] = hero[0]+1
+        if hero['point'][0] < len(row)- 1:
+            row[hero['point'][0]][hero['point'][1]] = '0 '
+            row[hero['point'][0]+1][hero['point'][1]] = '1 '
+            hero['point'][0] = hero['point'][0]+1
         else:
             print("There is no more map that way")
     elif key == 'w':
          # Moves one space up
-        if hero[0] > 0:
-            row[hero[0]][hero[1]] = '0 '
-            row[hero[0]-1][hero[1]] = '1 '
-            hero[0] = hero[0]-1
+        if hero['point'][0] > 0:
+            row[hero['point'][0]][hero['point'][1]] = '0 '
+            row[hero['point'][0]-1][hero['point'][1]] = '1 '
+            hero['point'][0] = hero['point'][0]-1
         else:
             print("There is no more map that way")
     elif key == 'a':
          # Moves one space left
-        if hero[1] > 0 :
-            row[hero[0]][hero[1]] = '0 '
-            row[hero[0]][hero[1]-1] = '1 '
-            hero[1] = hero[1]+-1
+        if hero['point'][1] > 0 :
+            row[hero['point'][0]][hero['point'][1]] = '0 '
+            row[hero['point'][0]][hero['point'][1]-1] = '1 '
+            hero['point'][1] = hero['point'][1]+-1
         else:
             print("There is no more map that way")
     elif key == 'd':
           # Moves one space right
-        if hero[1] < len(col)- 1:
-            row[hero[0]][hero[1]] = '0 '
-            row[hero[0]][hero[1]+1] = '1 '
-            hero[1] = hero[1]+1
+        if hero['point'][1] < len(col)- 1:
+            row[hero['point'][0]][hero['point'][1]] = '0 '
+            row[hero['point'][0]][hero['point'][1]+1] = '1 '
+            hero['point'][1] = hero['point'][1]+1
         else:
             print("There is no more map that way")
     elif key == 'e':
