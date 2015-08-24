@@ -1,11 +1,12 @@
 import os
 import random
+import math
 col = []
 row = []
 done = False
 response = {'phrase' :'', 'last':''}
 hero = {'point':[0,0], 'attack': 1,'health' : 10, 'speed': 1}
-monster = {'point': [5,5],'attack' : 1, 'health' : 10, 'speed' : 1}
+monster = {'point': [0,0],'attack' : 1, 'health' : 10, 'speed' : 1}
 
 def size_grid(x,y):
     #Makes grid at size
@@ -13,6 +14,8 @@ def size_grid(x,y):
         col.append('0 ')
     for j in range(y):
         row.append(col[:])
+def random_spot(num):
+    return int(math.floor(random.random() * num)+1)
 
 def draw_grid():
     cls()
@@ -150,8 +153,14 @@ def start():
             break
         except ValueError:
             print('That wasnt a number try again')
+    if wide >= 25:
+        wide = 25
+    if height >= 25:
+        height = 25
     size_grid(wide,height)
     row[hero['point'][0]][hero['point'][1]] = '1 '
+    monster['point'][0] = random_spot(wide-1)
+    monster['point'][1] = random_spot(height-1)
     row[monster['point'][0]][monster['point'][1]] = 'X '
     draw_grid()
     while done == False:
