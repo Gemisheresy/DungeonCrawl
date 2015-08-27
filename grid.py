@@ -23,7 +23,9 @@ phrase = {'moved':'You explore this area and find nothing.',
           'missed':'You swung and missed.',
           'defeated':' You defeated the monster, press e to exit the dungeon.',
           'monster': 'There is a big snarling monster in front of you.',
-          'last':''} 
+          'sword': 'You found a magical sword, it shall help you slay the monster.',
+          'last':''}
+sword = {'point': [0,0], 'bonus':1}
 
 def size_grid(x,y):
     #Makes grid at size
@@ -38,6 +40,9 @@ def draw_grid():
     cls()
     for i in range(len(row)):
         print(''.join(row[i]))
+def equip_weapon():
+    hero['attack'] = hero['attack'] + sword['bonus']
+
 
 def cls():
     os.system(['clear','cls'][os.name == 'nt'])
@@ -62,6 +67,12 @@ def move(key):
         if hero['point'][0] < len(row)- 1:
             if row[hero['point'][0]+1][hero['point'][1]] =='X ':
                 change_phrase('monster')
+            elif row[hero['point'][0]+1][hero['point'][1]] =='+ ':
+                row[hero['point'][0]][hero['point'][1]] = '0 '
+                row[hero['point'][0]+1][hero['point'][1]] = '1 '
+                hero['point'][0] = hero['point'][0]+1
+                equip_weapon()
+                change_phrase('sword')
             elif row[hero['point'][0]+1][hero['point'][1]] == '0 ':
                 row[hero['point'][0]][hero['point'][1]] = '0 '
                 row[hero['point'][0]+1][hero['point'][1]] = '1 '
@@ -74,6 +85,12 @@ def move(key):
         if hero['point'][0] > 0:
             if row[hero['point'][0]-1][hero['point'][1]] =='X ':
                 change_phrase('monster')
+            elif row[hero['point'][0]-1][hero['point'][1]] == '+ ':
+                row[hero['point'][0]][hero['point'][1]] = '0 '
+                row[hero['point'][0]-1][hero['point'][1]] = '1 '
+                hero['point'][0] = hero['point'][0]-1
+                equip_weapon()
+                change_phrase('sword')
             elif row[hero['point'][0]-1][hero['point'][1]] == '0 ':
                 row[hero['point'][0]][hero['point'][1]] = '0 '
                 row[hero['point'][0]-1][hero['point'][1]] = '1 '
@@ -86,6 +103,12 @@ def move(key):
         if hero['point'][1] > 0 :
             if row[hero['point'][0]][hero['point'][1]-1] =='X ':
                 change_phrase('monster')
+            elif row[hero['point'][0]][hero['point'][1]-1] == '+ ':
+                row[hero['point'][0]][hero['point'][1]] = '0 '
+                row[hero['point'][0]][hero['point'][1]-1] = '1 '
+                hero['point'][1] = hero['point'][1]-1
+                equip_weapon()
+                change_phrase('sword')
             elif row[hero['point'][0]][hero['point'][1]-1] == '0 ':
                 row[hero['point'][0]][hero['point'][1]] = '0 '
                 row[hero['point'][0]][hero['point'][1]-1] = '1 '
@@ -98,6 +121,13 @@ def move(key):
         if hero['point'][1] < len(row)- 1:
             if row[hero['point'][0]][hero['point'][1]+1] =='X ':
                 change_phrase('monster')
+            elif row[hero['point'][0]][hero['point'][1]+1] == '+ ':
+                row[hero['point'][0]][hero['point'][1]] = '0 '
+                row[hero['point'][0]][hero['point'][1]+1] = '1 '
+                hero['point'][1] = hero['point'][1]+1
+                equip_weapon()
+                change_phrase('sword')
+                
             elif row[hero['point'][0]][hero['point'][1]+1] == '0 ':
                 row[hero['point'][0]][hero['point'][1]] = '0 '
                 row[hero['point'][0]][hero['point'][1]+1] = '1 '
@@ -110,7 +140,7 @@ def move(key):
 def attack():
 # checks last direction moved to if monster is in front of hero
     if direction['facing'] == 'Left':
-        if row[hero['point'][0]][hero['point'][1] - 1] == 'X ':
+        if row[hero['point'][0]][hero['point'][1] + 1] == 'X ':
             change_phrase('damaged')
             monster['health'] -= hero['attack']
         else:
@@ -131,7 +161,7 @@ def attack():
             change_phrase('missed')
             
     elif direction['facing'] == 'Right':
-        if row[hero['point'][0]][hero['point'][1]+1] == 'X ':
+        if row[hero['point'][0]][hero['point'][1]-1] == 'X ':
             change_phrase('damaged')
             monster['health'] -= hero['attack']
         else:
@@ -160,7 +190,16 @@ def start():
     row[hero['point'][0]][hero['point'][1]] = '1 '
     monster['point'][0] = random_spot(wide-1)
     monster['point'][1] = random_spot(height-1)
+    if monster['point'] == hero['point']:
+        monster['point'][0] = random_spot(wide-1)
+        monster['point'][1] = random_spot(height-1)
+    sword['point'][0] = random_spot(wide-1)
+    sword['point'][1] = random_spot(height-1)
+    if sword['point'] == monster['point'] or hero['point']:
+        sword['point'][0] = random_spot(wide-1)
+        sword['point'][1] = random_spot(height-1)
     row[monster['point'][0]][monster['point'][1]] = 'X '
+    row[sword['point'][0]][sword['point'][0]] = '+ '
     draw_grid()
     while done == False:
         way = str(input('Where do you want to go? '))
@@ -171,11 +210,15 @@ def start():
             attack()
         else:
             move(way)
-        if monster['health'] == 0:
+        if monster['health'] <= 0:
             row[monster['point'][0]][monster['point'][1]] = '0 '
+            if hero['point'] == monster['point']:
+                row[monster['point'][0]][monster['point'][1]] = '1 ' 
             change_phrase('defeated')
         draw_grid()
         print(phrase['last'])
+        print(hero['attack'])
+        print(monster['health'])
 start()
 
 
