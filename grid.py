@@ -1,8 +1,12 @@
 import os
 import random
 import math
+#import pygame
+#pygame.init()
+#clock = pygame.time.Clock()
 col = []
 row = []
+FPS = 30
 done = False
 hero = {'point':[0,0],
         'attack': 1,
@@ -52,7 +56,7 @@ def get_current():
 
 def change_last(key):
     direction['facing'] = direction.get(key)
-   
+
 def get_last():
     return direction['facing']
 
@@ -127,7 +131,7 @@ def move(key):
                 hero['point'][1] = hero['point'][1]+1
                 equip_weapon()
                 change_phrase('sword')
-                
+
             elif row[hero['point'][0]][hero['point'][1]+1] == '0 ':
                 row[hero['point'][0]][hero['point'][1]] = '0 '
                 row[hero['point'][0]][hero['point'][1]+1] = '1 '
@@ -135,8 +139,8 @@ def move(key):
                 change_phrase('moved')
         else:
                 change_phrase('bounds')
-    
-    
+
+
 def attack():
 # checks last direction moved to if monster is in front of hero
     if direction['facing'] == 'Left':
@@ -145,27 +149,29 @@ def attack():
             monster['health'] -= hero['attack']
         else:
             change_phrase('missed')
-            
+
     elif direction['facing'] == 'Down':
         if row[hero['point'][0]+1][hero['point'][1]] == 'X ':
             change_phrase('damaged')
             monster['health'] -= hero['attack']
         else:
             change_phrase('missed')
-            
+
     elif direction['facing'] == 'Up':
         if row[hero['point'][0]  - 1][hero['point'][1]] == 'X ':
             change_phrase('damaged')
             monster['health'] -= hero['attack']
         else:
             change_phrase('missed')
-            
+
     elif direction['facing'] == 'Right':
         if row[hero['point'][0]][hero['point'][1]-1] == 'X ':
             change_phrase('damaged')
             monster['health'] -= hero['attack']
         else:
             change_phrase('missed')
+
+
 
 def start():
 # starts game by creating to loops
@@ -205,7 +211,6 @@ def start():
         way = str(input('Where do you want to go? '))
         if way == 'e':
             done = True
-            cls()
         elif way == 'x':
             attack()
         else:
@@ -213,16 +218,10 @@ def start():
         if monster['health'] <= 0:
             row[monster['point'][0]][monster['point'][1]] = '0 '
             if hero['point'] == monster['point']:
-                row[monster['point'][0]][monster['point'][1]] = '1 ' 
+                row[monster['point'][0]][monster['point'][1]] = '1 '
             change_phrase('defeated')
         draw_grid()
         print(phrase['last'])
         print(hero['attack'])
         print(monster['health'])
 start()
-
-
-
-        
-        
-        
